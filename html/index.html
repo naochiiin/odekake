@@ -8,77 +8,91 @@
     <link rel="stylesheet" href="../CSS/style.css"> 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <title>おでかけ</title>
+    <title>ゆうなちゃんのおでかけ</title>
     
  </head>
 <body>
-
+    <!-- <section > -->
     <div id="game_menu" style="display: block;">
         ゆうなちゃんのおでかけ<br><br>
         <form>
             <button type="button" onclick="game_start();return false;">すたーと<br></button>
         </form>
+        
+            <video playsinline autoplay muted loop>
+              <source src="../img/yunatop.mp4" type="video/mp4">
+              <!-- <source src="video/bg.webm" type="video/webm"> -->
+            </video>
+      
     </div>
+    <!-- </section> -->
 
-    <div id="game_frame" style="display: none;" ><!--style="display: none;"-->
-    <div id="bcg" style="background-image:url(../img/house.jpg) ;background-repeat:no-repeat;width: 900px;height: 700px;">
-    <div id="bcg2" style="background-image:url(../img/start.jpg) ;background-repeat:no-repeat;width: 800px;height: 800px;">        
-    <div id="msg"></div>
-        <form id="f1">
-            <button type="button" value="xxx" id="choice1" onclick="change_scenario(0);return false;"><br></button>
-            <button type="button" value="xxx" id="choice2" onclick="change_scenario(1);return false;"><br></button>
-        </form>
+    <div id="game_frame" style="display: none;" >
+        <div id="msg"></div>
+            <form id="f1">
+                <button type="button" value="xxx" id="choice1" onclick="change_scenario(0);return false;"><br></button>
+                <button type="button" value="xxx" id="choice2" onclick="change_scenario(1);return false;"><br></button>
+            </form>
+
+            <div class="imgstyle">
+                <div id="bcg" style="background-image:url(../img/0.jpg) ;background-repeat:no-repeat;width: 1280px;height: 800px;"></div>
+                <div id="bcg2" style="background-image:url(../img/zounokage.png) ;background-repeat:no-repeat;width: 240x;height: 200px;"></div>
+            </div>
+            
+            
     </div>
-    </div>
-  <script>
-var current_id=0;
-var current_data=[];
-var scenario_data=[
-    {
-    //Q1
+    <script>
+    var current_id=0; //現在のシナリオID
+    var current_data=[];//シナリオの一時保存エリア
+    var scenario_data=[
+        {    
+        //Q1
         "id":0,
-    "msg":"ゆうなちゃんきょうはどこへおでかけしようか",
-    "img":"../img/house.jpg" ,
-    "img2":"../img/yuna1.png",
-    // "bgm":"./bgm/BGM1.mp3",
-    // "audio":"./audio/zou.mp3",
-    "choice":[
-        {
-            "goto":1, //次にいくシナリオの番号
-            "text":"どうぶつえん"
-        },
-        {
-            "goto":2,
-            "text":"すいぞくかん"
-        }
-    ]
-   
-
+        "msg":"ゆうなちゃん、きょうはどこへおでかけしようか？",
+        "img":"../img/0.jpg" ,
+        // "img2":"../img/yuna1.png",
+        "bgm":"./bgm/BGM1.mp3",
+        // "audio":"./audio/zou.mp3",
+        "choice":[
+            {
+                "goto":1, //次にいくシナリオの番号
+                "text":"どうぶつえん"
+            },
+            {
+                "goto":2,
+                "text":"すいぞくかん"
+            }
+        ]
+        
     },
-    //Q1-1どうぶつえんを選んだら
+        
+        //１．どうぶつえんを選んだら
     {
         "id":1,
-        "msg":"どうぶつえんにやってきたよ。<br>あれれ、なにかきこえたね。なんのどうぶつだろう？",
-        "img":"../img/zoo.jpg",
-        "img2":"../img/2p.png",
-        "audio":"./audio/zou.mp3",
+        "msg":"どうぶつえんにやってきたよ。<br>ぞうとらいおんどっちをみたい？",
+        "img":"../img/1.jpg",
+        "img2":"../img/zounokage.png",
+        "audio":"./audio/zoo.mp3",
+        // "audio2":"./audio/zou.mp3",//audio2をクリックしたら流れるようにしたい(♯bcg3)
+        "bgm":"./bgm/zooBGM.mp3",
         "choice":[
         {
             "goto":3,
-            "text":"ぞう"
+            "text":"ぞ う"
         },
         {
             "goto":4,
             "text":"らいおん"
         }
     ]},
-    //Q1-2すいぞくかんを選んだら
+    //２．すいぞくかんを選んだら
     {
         "id":2,
         "msg":"すいぞくかんにやってきたよ。<br>ショーがはじまるみたい。いるかとあしかどっちをみたい？",
-        "img":"../img/fish.jpg",
-        "img2":"../img/2p.png",
-        // audio:"",
+        "img":"../img/3.jpg",
+        // "img2":"../img/2p.png",
+        "audio":"./audio/suizokukan.mp3",
+        "bgm":"./bgm/sea.mp3",
         "choice":[
         {
             "goto":5,
@@ -89,13 +103,13 @@ var scenario_data=[
             "text":"あしか"
         }
     ]},
-    //Q1-1-1ぞうを選んだら
-         {
+    //３．ぞうを選んだら
+        {
         "id":3,
-        "msg":"ぞうさんだ！ゆうなちゃんだいせいかい！ぞうさんがのせてくれるよ。",
+        "msg":"ぞうさんだ！おおきくておはながながいねぇ！<br>つぎはなにをみにいく？",
         "img":"../img/zou.jpg" ,
-        "img2":"../img/3p.png",
-        // "bgm":"./bgm/BGM1.mp3",
+        // "img2":"../img/3p.png",
+        "audio":"./audio/zou.mp3",
         // "audio":"./audio/zou.mp3",
         "choice":[
             {
@@ -107,53 +121,91 @@ var scenario_data=[
                 "text":"きりん"
             }
         ]},
-    //Q1-2-1いるかを選んだら
-        {
-        "id":5,
-        "msg":"いるかさんのショーだ、すごいね！<br>わぁ～ゆうなちゃんいるかさんのせなかにのってる！！",
-        "img":"../img/iruka.jpg" ,
-        "img2":"../img/3p.png",
-        // "bgm":"./bgm/BGM1.mp3",
+    //４．らいおんを選んだら
+    {
+        "id":4,
+        "msg":"らいおんさんだ！<br>らいおんバスにのってちかくでみてみよう！",
+        "img":"../img/lion.jpg" ,
+        // "img2":"../img/3p.png",
+        "audio":"./audio/buss.mp3",
         // "audio":"./audio/zou.mp3",
         "choice":[
             {
-                "goto":9, //次にいくシナリオの番号
-                "text":"あれれ、ゆうなちゃんどこ行くの？"
+                "goto":7, //次にいくシナリオの番号
+                "text":"ぱんだ"
+            },
+            {
+                "goto":8,
+                "text":"きりん"
+            }
+        ]},
+    //５．いるかを選んだら
+        {
+        "id":5,
+        "msg":"いるかさんのショーだ、わぁー！はくりょくまんてん！！<br>すごいすごい！<br>",
+        "img":"../img/iruka.jpg" ,
+        // "img2":"../img/3p.png",
+        "audio":"./audio/iruka.mp3",
+        "bgm":"./bgm/irukashow.mp3",
+        "choice":[
+            {
+                "goto":7, //次にいくシナリオの番号
+                "text":"よーし！くるまにのっておうちにかえろう"
             },
             // {
             //     // "goto":10,
             //     // "text":""
+        // }
+     ]},
+          //７．ぱんだを選んだら
+          {
+        "id":7,
+        "msg":"パンダのこどもたちだ。<br>ほいくえんかな？おともだちがいっぱいだね。",
+        "img":"../img/panda.jpg" ,
+        // "img2":"../img/3p.png",
+        "audio":"./audio/panda.mp3",
+        // "audio":"./audio/zou.mp3",
+        "choice":[
+            {
+                "goto":7, //次にいくシナリオの番号
+                "text":"よーし！たくさんあそんだね。<br>くるまにのっておうちにかえろう"
+            },
+            // {
+            //     "goto":8,
+            //     "text":"きりん"
             // }
-        ]}
+        ]},
         ];
+
+    
 
     let audio_bgm_file="";
     let audio_bgm = new Audio(); 
 
     function game_start(){ //ゲームスタートを押したら
-        console.log('すたーと');
+        // console.log('すたーと');
         disp_scenario(0); //シーンの切替
         game_menu.style.display = "none";//スタートボタン非表示
         game_frame.style.display = "block";//ゲームメニュー表示へ
         
-};
+    };
 
     function disp_scenario(){
 
         let result=scenario_data.filter(function(value){//scenario_dataにフィルターをかけ、
-            console.log(value.id);
-            console.log(value);
+            // console.log(value.id);
+            // console.log(value);
             if(value.id==current_id)return true;//value.idとcarrent_idが同じのとき、、？
     
         });
     if(result.length==0){ //resultの要素が０のとき、戻す（なにもしない）
         return;
         }
-    console.log(result);
-    console.log(result[0]);
+    // console.log(result);
+    // console.log(result[0]);
     current_data=result[0]; //取り出したらcurrent_dataへ一旦入れる
     msg.innerHTML = current_data.msg;//msg書き換え
-    console.log(current_data.choice);
+    // console.log(current_data.choice);
     document.forms.f1.choice1.value=current_data.choice[0].text;//choice１のボタンを0に書き換え
     document.forms.f1.choice1.innerHTML=current_data.choice[0].text;//choice１のボタンを0に書き換え
     if(current_data.choice.length>=2){ //2も同じように定義されていれば2も書き換え
@@ -165,15 +217,16 @@ var scenario_data=[
     }
     bcg.style.backgroundImage="url("+current_data.img+")";
     bcg2.style.backgroundImage="url("+current_data.img2+")";
-    console.log(current_data.img2);
+    
+
 
     let audio=new Audio(current_data.audio);
-    audio.volume=0.2;
+    audio.volume=0.9;
     audio.play();
     if('bgm'in current_data){
         bgm(current_data.bgm);
     }
-    }
+    
 
     function bgm(file_name){
         audio_bgm.pause();
@@ -182,16 +235,15 @@ var scenario_data=[
         audio_bgm.loop=true;
         audio_bgm.play();
     }
-
-    
+    }
 
     function change_scenario(selectno){//選択するとここに飛ぶ。選択した番号が渡される
-        console.log(current_data);
+        // console.log(current_data);
         current_id=current_data.choice[selectno].goto;
         disp_scenario();
     }
 
-
+  
 
 </script> 
       
