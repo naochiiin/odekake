@@ -30,7 +30,7 @@ section {
     height: auto;
     min-width: 100%;
     min-height: 100px;
-    background: url('../img/G\'s\ ACADEMY\ -CM-_Trim.mp4') no-repeat;
+    background: url('../img/yunatop.GIF') no-repeat;
     background-size: cover;
     z-index: -1;
     opacity: 0.55 ;
@@ -46,17 +46,41 @@ body{
 #msg {
     font-family:"MyFont","Amatic SC", 'Open Sans', sans-serif ;
     position: absolute;
-    margin:40px auto;
+    margin:60px auto;
     width:auto;
     left: 30px;
-    padding:20px 80px;
-    border:1px solid #ddd;
-    background-color: #efefef;;
     display: table-cell;
     vertical-align: middle;
     font-size: 40px; 
+   /* position: relative; */
+    padding: 20px;
+    border-radius: 20px;
+    background: rgb(158, 243, 222);
+    width: 75%;
+    margin: 0 auto;
+    }
 
-}
+    #msg:before,
+    #msg::after {
+    position: absolute;
+    content: '';
+    border-radius: 50%;
+    background: rgb(158, 243, 222);
+    }
+
+    #msg::before {
+        bottom: -13px;
+        left: 30px;
+        width: 35px;
+        height: 35px;
+    }
+
+    #msg::after {
+        bottom: -32px;
+        left: 53px;
+        width: 17px;
+        height: 17px;
+    }
 
 #f1 {
     
@@ -67,14 +91,34 @@ body{
 
 #choice1 {
     font-size: 30px;
-    margin-right: 250px;
-}
+    margin-right: 350px;
+    /* font-size: 18px; */
+    display: inline-block;
+    padding: 0.4em 1em 0.2em;
+    color: #ffffff;
+    border: #ffffff dashed 1px;
+    box-shadow: 0 0 0 0.2em #ff99cc;
+    border-radius: 2.5px;
+    background-color: #ff99cc;
+    cursor: pointer;
+
+    }
 
 #choice2 {
     font-size: 30px;
+    display: inline-block;
+    padding: 0.4em 1em 0.2em;
+    color: #ffffff;
+    border: #ffffff dashed 1px;
+    box-shadow: 0 0 0 0.2em #ff99cc;
+    border-radius: 2.5px;
+    background-color: #ff99cc;
+    cursor: pointer;
 }
 
 button{
     font-family:"MyFont","Amatic SC", 'Open Sans', sans-serif ;
     border: 0;
 }
+
+
