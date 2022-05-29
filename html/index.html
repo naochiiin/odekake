@@ -19,10 +19,9 @@
             <button type="button" id="btn" onclick="game_start();return false;">すたーと<br></button>
         
         
-            <video playsinline autoplay muted loop>
-              <source src="../img/yunatop.GIF" type="video/GIF">
-              <!-- <source src="video/bg.webm" type="video/webm"> -->
-            </video>
+            <img  src="../img/yunatop.gif" alt="" id="gif" ><!--playsinline autoplay muted loop-->
+                         
+            
       
     </div>
     <!-- </section> -->
@@ -42,6 +41,9 @@
             
             
     </div>
+
+    <!-- <img src="../img/yunatop.gif" alt=""> -->
+
     <script>
     var current_id=0; //現在のシナリオID
     var current_data=[];//シナリオの一時保存エリア
@@ -62,9 +64,7 @@
             {
                 "goto":2,
                 "text":"すいぞくかん"
-            }
-        ]
-        
+            }]
     },
         
         //１．どうぶつえんを選んだら
@@ -72,7 +72,7 @@
         "id":1,
         "msg":"わぁ～どうぶつえんにやってきたよ。<br>ぞうとらいおんどっちをみたい？",
         "img":"../img/1.jpg",
-        "img2":"../img/zoukage.png",
+        "img2":"../img/toumei.png",
         "audio":"./audio/zoo.mp3",
         "audio2":"./audio/zou.mp3",//audio2をクリックしたら流れるようにしたい(♯bcg3)
         "bgm":"./bgm/zooBGM.mp3",
@@ -125,7 +125,7 @@
     //４．らいおんを選んだら
     {
         "id":4,
-        "msg":"らいおんさんだ！<br>らいおんバスにのってちかくでみてみよう！",
+        "msg":"らいおんさんだ！らいおんバスにのってちかくでみてみよう！<br>つぎはぱんだときりんどっちにする？",
         "img":"../img/lion.jpg" ,
         "img2":"../img/toumei.png",
         "audio":"./audio/buss.mp3",
@@ -143,7 +143,7 @@
     //５．いるかを選んだら
         {
         "id":5,
-        "msg":"いるかさんのショーだ、わぁー！はくりょくまんてん！！<br>すごいすごい！<br>",
+        "msg":"いるかちゃんのショーだ、わぁー！はくりょくまんてん！！<br>すごいすごい！<br>",
         "img":"../img/iruka.jpg" ,
         "img2":"../img/toumei.png",
         "audio":"./audio/iruka.mp3",
@@ -245,13 +245,13 @@
         "choice":[
             {
                 "goto":21, //次にいくシナリオの番号
-                "text":"しゅっぱつしんこーーー！！"
+                "text":"しゅっぱつしんこう！"
             },
         ]},
         //21．しゅっぱつしんこーを選んだら
         {
         "id":21,
-        "msg":"きょうはいっぱいあそんでたのしかったね。<br>いっぱいねてまたあしたね。",
+        "msg":"きょうはいっぱいあそんでたのしかったね。<br>いっぱいねてまたあしたもあそうぼうね。",
         "img":"../img/neru.jpg" ,
         "img2":"../img/toumei.png",
         "audio":"./audio/tadaima.mp3",
@@ -296,7 +296,7 @@
         let result=scenario_data.filter(function(value){//scenario_dataにフィルターをかけ、
             // console.log(value.id);
             // console.log(value);
-            if(value.id==current_id)return true;//value.idとcarrent_idが同じのとき、、？
+            if(value.id==current_id)return true;//IDを取り出せなかったらエラーになる
     
         });
     if(result.length==0){ //resultの要素が０のとき、戻す（なにもしない）
@@ -307,24 +307,25 @@
     current_data=result[0]; //取り出したらcurrent_dataへ一旦入れる
     msg.innerHTML = current_data.msg;//msg書き換え
     // console.log(current_data.choice);
-    document.forms.f1.choice1.value=current_data.choice[0].text;//choice１のボタンを0に書き換え
+    document.forms.f1.choice1.value=current_data.choice[0].text;
     document.forms.f1.choice1.innerHTML=current_data.choice[0].text;//choice１のボタンを0に書き換え
     if(current_data.choice.length>=2){ //2も同じように定義されていれば2も書き換え
         document.forms.f1.choice2.value=current_data.choice[1].text;
         document.forms.f1.choice2.innerHTML=current_data.choice[1].text;
         document.forms.f1.choice2.style.visibility="visible";//データがなければ非表示
     }else{
+        //choice2なければ非表示（可変長）
         document.forms.f1.choice2.style.visibility="hidden";
     }
     bcg.style.backgroundImage="url("+current_data.img+")";
     bcg2.src=`${current_data.img2}`;
     
 
-
+    //audio(効果音)
     let audio=new Audio(current_data.audio);
-    audio.volume=0.9;
+    audio.volume=0.7;
     audio.play();
-    if('bgm'in current_data){
+    if('bgm'in current_data){ //BGMが定義してれば呼び出し実行
         bgm(current_data.bgm);
     }
     
@@ -344,7 +345,9 @@
 
 
     function bgm(file_name){
+        //今鳴っているBGMとめる
         audio_bgm.pause();
+        //新しくファイルを書き換えて再生。これしないとずっと鳴っちゃう。
         audio_bgm=new Audio(file_name);
         audio_bgm.volume=0.2;
         audio_bgm.loop=true;
@@ -352,7 +355,8 @@
     }
     }
 
-    function change_scenario(selectno){//選択するとここに飛ぶ。選択した番号が渡される
+    //選択するとここに飛ぶ。選択した番号が渡される
+    function change_scenario(selectno){
         // console.log(current_data);
         current_id=current_data.choice[selectno].goto;
         disp_scenario();
